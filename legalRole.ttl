@@ -1,0 +1,2225 @@
+@prefix : <http://www.frdc.com/legalDocument/ontologies/legalRole#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix time: <https://www.w3.org/TR/owl-time/> .
+@prefix vcard: <http://www.w3.org/2006/vcard/ns#> .
+@base <http://www.frdc.com/legalDocument/ontologies/legalRole> .
+
+<http://www.frdc.com/legalDocument/ontologies/legalRole> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#actAs
+:actAs rdf:type owl:ObjectProperty ;
+       rdfs:domain [ rdf:type owl:Class ;
+                     owl:unionOf ( foaf:Organization
+                                   foaf:Person
+                                 )
+                   ] ;
+       rdfs:range :Agent ;
+       rdfs:comment "比如某人作为被告"@zh ;
+       rdfs:label "担任、作为"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#affiliates
+:affiliates rdf:type owl:ObjectProperty ;
+            rdfs:domain :HumanRole ;
+            rdfs:range foaf:Organization ;
+            rdfs:comment """任职于某组织
+注：与memberOf区别，侧重在某环境下担当的工作"""@zh ;
+            rdfs:label "任职于"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#disputes
+:disputes rdf:type owl:ObjectProperty ;
+          rdfs:domain :PrivateAgentInTrial ;
+          rdfs:range :PrivateAgentInTrial ;
+          rdfs:comment "有利益冲突的双方的关系，比如原先和被告"@zh ;
+          rdfs:label "争执"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hasAuthority
+:hasAuthority rdf:type owl:ObjectProperty ;
+              rdfs:domain foaf:Organization ;
+              rdfs:range foaf:Organization ;
+              rdfs:comment """主管机构指官方的权利机构，是用来管理该组织的机构，而不是该组织的总部
+当局；官方；当权者the people or an organization who have the power to make decisions or who have a particular area of responsibility in a country or region"""@zh ;
+              rdfs:label "有主管机构"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hasBankAccount
+:hasBankAccount rdf:type owl:ObjectProperty ;
+                rdfs:domain [ rdf:type owl:Class ;
+                              owl:unionOf ( foaf:Organization
+                                            foaf:Person
+                                          )
+                            ] ;
+                rdfs:range :Company ;
+                rdfs:label "有开户行"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hasChild
+:hasChild rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf :hasKinship ;
+          owl:inverseOf :hasParent ;
+          rdf:type owl:AsymmetricProperty ,
+                   owl:IrreflexiveProperty ;
+          rdfs:label "有孩子"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hasGroup
+:hasGroup rdf:type owl:ObjectProperty ;
+          rdfs:domain foaf:Organization ;
+          rdfs:range foaf:Group ;
+          rdfs:comment "比如公司有读书会，有党小组"@zh ;
+          rdfs:label "有团体"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hasHead
+:hasHead rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf <http://www.w3.org/ns/org#hasMember> ;
+         rdfs:label "有领导或负责人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hasKinship
+:hasKinship rdf:type owl:ObjectProperty ,
+                     owl:IrreflexiveProperty ;
+            rdfs:domain foaf:Person ;
+            rdfs:range foaf:Person ;
+            rdfs:comment """属性约束说明：不自反的
+A不能是自己的亲属"""@zh ;
+            rdfs:label "有亲属关系"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hasLegalAgent
+:hasLegalAgent rdf:type owl:ObjectProperty ;
+               owl:inverseOf :isLegalAgent ;
+               rdf:type owl:InverseFunctionalProperty ,
+                        owl:IrreflexiveProperty ;
+               rdfs:domain :PrivateAgentInTrial ;
+               rdfs:range :LegalAgent ;
+               rdfs:comment "比如原告有代理律师"@zh ;
+               rdfs:label "有代理人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hasLegalRepresentative
+:hasLegalRepresentative rdf:type owl:ObjectProperty ;
+                        rdfs:subPropertyOf <http://www.w3.org/ns/org#hasMember> ;
+                        rdfs:label "有法人代表"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hasLocality
+:hasLocality rdf:type owl:ObjectProperty ;
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( :Event
+                                         foaf:Organization
+                                       )
+                         ] ;
+             rdfs:range vcard:Location ;
+             rdfs:comment "指有实际的地理位置"@zh ;
+             rdfs:label "有地点"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hasNativePlace
+:hasNativePlace rdf:type owl:ObjectProperty ;
+                rdfs:domain foaf:Person ;
+                rdfs:range vcard:Location ;
+                rdfs:comment "相比 nativePlaceName, 可以包含更详细的位置信息"@zh ;
+                rdfs:label "籍贯是"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hasOffice
+:hasOffice rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :hasLocality ;
+           rdfs:domain foaf:Organization ;
+           rdfs:range vcard:Location ;
+           rdfs:label "有办公室"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hasParent
+:hasParent rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :hasKinship ;
+           rdf:type owl:AsymmetricProperty ,
+                    owl:IrreflexiveProperty ;
+           rdfs:range foaf:Person ;
+           rdfs:label "有父母"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hasRegisteredSite
+:hasRegisteredSite rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf :hasLocality ;
+                   rdfs:domain foaf:Organization ;
+                   rdfs:range vcard:Location ;
+                   rdfs:comment "公司的注册地址"@zh ;
+                   rdfs:label "注册地点"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#holdsConfirmation
+:holdsConfirmation rdf:type owl:ObjectProperty ;
+                   rdfs:domain [ rdf:type owl:Class ;
+                                 owl:unionOf ( :HumanRole
+                                               foaf:Person
+                                             )
+                               ] ;
+                   rdfs:range :Object ;
+                   rdfs:comment "比如护照，户口，身份证等"@zh ;
+                   rdfs:label "持有的（身份）确认证书"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#isAttendee
+:isAttendee rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            rdfs:domain [ rdf:type owl:Class ;
+                          owl:unionOf ( :Agent
+                                        foaf:Person
+                                      )
+                        ] ;
+            rdfs:range :Event ;
+            rdfs:comment "比如观看演出的观众"@zh ;
+            rdfs:label "是参与者"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#isLegalAgent
+:isLegalAgent rdf:type owl:ObjectProperty ;
+              rdfs:domain :LegalAgent ;
+              rdfs:label "是某人的代理人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#isMarital
+:isMarital rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf :hasKinship ;
+           rdf:type owl:SymmetricProperty ,
+                    owl:IrreflexiveProperty ;
+           rdfs:range foaf:Person ;
+           rdfs:label "是夫妻关系的"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#isPerformer
+:isPerformer rdf:type owl:ObjectProperty ;
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( :Agent
+                                         foaf:Person
+                                       )
+                         ] ;
+             rdfs:range :Event ;
+             rdfs:comment "事件的主体，如获得执业资格的律师，在获得执照事件中"@zh ;
+             rdfs:label "事件的主要执行者"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#occuresAt
+:occuresAt rdf:type owl:ObjectProperty ;
+           rdfs:domain :Event ;
+           rdfs:range [ rdf:type owl:Class ;
+                        owl:unionOf ( vcard:Location
+                                      foaf:Organization
+                                    )
+                      ] ;
+           rdfs:comment "比如在大学读书事件中的大学"@zh ;
+           rdfs:label "事件发生的场所，可以是地点或某机构"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#resides
+:resides rdf:type owl:ObjectProperty ;
+         rdfs:domain foaf:Person ;
+         rdfs:range vcard:Location ;
+         rdfs:label "居住于"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#serveAs
+:serveAs rdf:type owl:ObjectProperty ;
+         rdfs:domain [ rdf:type owl:Class ;
+                       owl:unionOf ( foaf:Group
+                                     foaf:Organization
+                                   )
+                     ] ;
+         rdfs:range :Agent ;
+         rdfs:comment "比如某公司作为原告"@zh ;
+         rdfs:label "充当、作为、行使"@zh .
+
+
+###  http://www.w3.org/ns/org#hasMember
+<http://www.w3.org/ns/org#hasMember> rdf:type owl:ObjectProperty ;
+                                     owl:inverseOf <http://www.w3.org/ns/org#memberOf> ;
+                                     rdfs:domain [ rdf:type owl:Class ;
+                                                   owl:unionOf ( foaf:Group
+                                                                 foaf:Organization
+                                                               )
+                                                 ] ;
+                                     rdfs:range foaf:Person ;
+                                     rdfs:label "有成员"@zh .
+
+
+###  http://www.w3.org/ns/org#hasSubOrg
+<http://www.w3.org/ns/org#hasSubOrg> rdf:type owl:ObjectProperty ;
+                                     owl:inverseOf <http://www.w3.org/ns/org#hasSupOrg> ;
+                                     rdfs:domain foaf:Organization ;
+                                     rdfs:range foaf:Organization ;
+                                     rdfs:label "有下级机构"@zh .
+
+
+###  http://www.w3.org/ns/org#hasSupOrg
+<http://www.w3.org/ns/org#hasSupOrg> rdf:type owl:ObjectProperty ;
+                                     rdfs:label "有上级机构"@zh .
+
+
+###  http://www.w3.org/ns/org#headOf
+<http://www.w3.org/ns/org#headOf> rdf:type owl:ObjectProperty ;
+                                  rdfs:subPropertyOf <http://www.w3.org/ns/org#memberOf> ;
+                                  rdfs:range [ rdf:type owl:Class ;
+                                               owl:unionOf ( foaf:Group
+                                                             foaf:Organization
+                                                           )
+                                             ] ;
+                                  rdfs:label "是某组织的负责人"@zh .
+
+
+###  http://www.w3.org/ns/org#memberOf
+<http://www.w3.org/ns/org#memberOf> rdf:type owl:ObjectProperty ;
+                                    rdfs:range [ rdf:type owl:Class ;
+                                                 owl:unionOf ( foaf:Group
+                                                               foaf:Organization
+                                                             )
+                                               ] ;
+                                    rdfs:comment "是某机构成员"@zh ;
+                                    rdfs:label "就职于，加入"@zh .
+
+
+###  http://xmlns.com/foaf/0.1/knows
+foaf:knows rdf:type owl:ObjectProperty ,
+                    owl:SymmetricProperty ;
+           rdfs:domain foaf:Person ;
+           rdfs:range foaf:Person ;
+           rdfs:label "相互认识"@zh .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://purl.org/dc/terms/identifier
+dct:identifier rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:range xsd:token ;
+               rdfs:label "ID号"@zh .
+
+
+###  http://purl.org/dc/terms/type
+dct:type rdf:type owl:DatatypeProperty .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#HPUrl
+:HPUrl rdf:type owl:DatatypeProperty ;
+       rdfs:domain [ rdf:type owl:Class ;
+                     owl:unionOf ( foaf:Organization
+                                   foaf:Person
+                                 )
+                   ] ;
+       rdfs:range xsd:anyURI ;
+       rdfs:label "官网地址"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#aboutOrg
+:aboutOrg rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf :orgProperty ;
+          rdfs:domain foaf:Organization ;
+          rdfs:range xsd:string ;
+          rdfs:comment "组织介绍"@zh ;
+          rdfs:label "简介"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#approvalNum
+:approvalNum rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf :eventProperty ;
+             rdfs:comment """比如律所的执业许可证的批准文号
+沪司审(04-1)字(2013)1547号"""@zh ;
+             rdfs:label "批准文号"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#assessment
+:assessment rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf :eventProperty ;
+            rdfs:domain :PracticeEvent ;
+            rdfs:comment """例如，上级对律师执业情况的评估，考核， 可能是年审
+2016年基本称职
+2017年暂缓考核"""@zh ;
+            rdfs:label "评估"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#award
+:award rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf :humanProperty ;
+       rdfs:comment "比如获得国家五一奖章，奥斯卡等"@zh ;
+       rdfs:label "获奖或荣誉"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#behavioralAbility
+:behavioralAbility rdf:type owl:DatatypeProperty ;
+                   rdfs:domain :PrivateAgentInTrial ;
+                   rdfs:range [ rdf:type rdfs:Datatype ;
+                                owl:oneOf [ rdf:type rdf:List ;
+                                            rdf:first "完全行为能力" ;
+                                            rdf:rest [ rdf:type rdf:List ;
+                                                       rdf:first "无行为能力" ;
+                                                       rdf:rest [ rdf:type rdf:List ;
+                                                                  rdf:first "限制行为能力" ;
+                                                                  rdf:rest rdf:nil
+                                                                ]
+                                                     ]
+                                          ]
+                              ] ;
+                   rdfs:label "行为能力"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#businessHour
+:businessHour rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf :orgProperty ;
+              rdfs:domain foaf:Organization ;
+              rdfs:comment """基本格式
+open:tt,close:tt"""@zh ;
+              rdfs:label "营业时间"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#businessLicenseNum
+:businessLicenseNum rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf dct:identifier ;
+                    rdfs:label "营业执照"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#businessScope
+:businessScope rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :orgProperty ;
+               rdfs:domain foaf:Organization ;
+               rdfs:label "营业范围"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#businessSpeciality
+:businessSpeciality rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf :orgProperty ;
+                    rdfs:domain foaf:Organization ;
+                    rdfs:label "业务特长"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#certificateName
+:certificateName rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf :eventProperty ,
+                                    foaf:name ;
+                 rdfs:domain :CertificateEvent ;
+                 rdfs:label "证书名称"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#certificateStatus
+:certificateStatus rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf :eventProperty ;
+                   rdfs:comment "比如，正常，失效等"@zh ;
+                   rdfs:label "证书状态"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#certificateType
+:certificateType rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf dct:type ,
+                                    :eventProperty ;
+                 rdfs:domain :CertificateEvent ;
+                 rdfs:label "证书类型"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#chatID
+:chatID rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf :contactInfo ;
+        rdfs:label "聊天帐号"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#commend
+:commend rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf :eventProperty ;
+         rdfs:domain :PracticeEvent ;
+         rdfs:label "表彰"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#contactInfo
+:contactInfo rdf:type owl:DatatypeProperty ;
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( foaf:Organization
+                                         foaf:Person
+                                       )
+                         ] ;
+             rdfs:label "联系信息"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#countOfLawyer
+:countOfLawyer rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :lawFirmProperty ;
+               rdfs:domain :LawFirm ;
+               rdfs:range xsd:integer .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#countOfMember
+:countOfMember rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :orgProperty ;
+               rdfs:domain [ rdf:type owl:Class ;
+                             owl:unionOf ( foaf:Group
+                                           foaf:Organization
+                                         )
+                           ] ;
+               rdfs:range xsd:integer ;
+               rdfs:comment "机构人数"@zh ;
+               rdfs:label "人数"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#criminalResponsibility
+:criminalResponsibility rdf:type owl:DatatypeProperty ;
+                        rdfs:domain :PrivateAgentInTrial ;
+                        rdfs:label "刑事责任能力"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#dataSecurity
+:dataSecurity rdf:type owl:DatatypeProperty ;
+              rdfs:label "信息安全要求的属性"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#dateOfComplaint
+:dateOfComplaint rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf :eventProperty ;
+                 rdfs:domain :PracticeEvent ;
+                 rdfs:label "被投诉的时间"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#dateOfPrevious
+:dateOfPrevious rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf :eventProperty ;
+                rdfs:label "上一个证书获得的时间"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#description
+:description rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf :eventProperty ;
+             rdfs:comment "比如 trigger words 等"@zh ;
+             rdfs:label "事件的简单描述"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#domicilePlaceName
+:domicilePlaceName rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf :humanProperty ;
+                   rdfs:range xsd:string ;
+                   rdfs:label "户籍地名"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#domicileRegisterNum
+:domicileRegisterNum rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf :humanProperty ;
+                     rdfs:label "户口簿编号"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#education
+:education rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf :humanProperty ;
+           rdfs:comment """参照国家标准《GB/T 4658-2006 学历代码》
+枚举值：10:研究生教育，11:博士研究生毕业，12:博士研究生结业，13:博士研究生肄业，14:硕士研究生毕业，15:硕士研究生结业，16:硕士研究生肄业，17:研究生班毕业，18:研究生班结业，19:研究生班肄业，20:大学本科，30:专科教育，21:大学本科毕业，22:大学本科结业，23:大学本科肄业，28:大学普通班毕业，31:大学专科毕业，32:大学专科结业，33:大学专科肄业，40:中等职业教育，41:中等专科毕业，42:中等专科结业，43:中等专科肄业，44:职业高中毕业，45:职业高中结业，46:职业高中肆业，47:技工学校毕业，48:技工学校结业，49:技工学校肄业，60:普通高级中学教育，61:普通高中毕业，62:普通高中结业，63:普通高中肄业，70:初级中学教育，71:初中毕业，73:初中肄业，80:小学教育，81:小学毕业，83:小学肆业，90:其他"""@zh ;
+           rdfs:label "文化程度"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#endDate
+:endDate rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf :eventProperty ;
+         rdfs:label "结束日期"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#enterpriseCode
+:enterpriseCode rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf dct:identifier ;
+                rdfs:comment "事业法人登记证书的编号"@zh ;
+                rdfs:label "事业法人登记码"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#ethnicGroup
+:ethnicGroup rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf :humanProperty ;
+             rdfs:label "民族"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#eventName
+:eventName rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf :eventProperty ,
+                              foaf:name ;
+           rdfs:comment "比如， 被投诉， 成为合伙人等"@zh ;
+           rdfs:label "事件名"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#eventProperty
+:eventProperty rdf:type owl:DatatypeProperty ;
+               rdfs:domain :Event ;
+               rdfs:label "事件相关属性"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#eventType
+:eventType rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf dct:type ,
+                              :eventProperty ;
+           rdfs:comment "暂时包含： 教育， 工作， 获得资格， 商务， 职位变动"@zh ;
+           rdfs:label "事件类型"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#fax
+:fax rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf :contactInfo ;
+     rdfs:label "传真"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#firstOccuredPlaceName
+:firstOccuredPlaceName rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf :eventProperty ;
+                       rdfs:label "首次发生的地名"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#foundedDate
+:foundedDate rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf :orgProperty ;
+             rdfs:domain [ rdf:type owl:Class ;
+                           owl:unionOf ( foaf:Group
+                                         foaf:Organization
+                                       )
+                         ] ;
+             rdfs:label "成立日期"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#geo
+:geo rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf :locationProperty ;
+     rdfs:label "GPS标识"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#govOrgType
+:govOrgType rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf :orgType ;
+            rdfs:comment """枚举值： 1 党组织机关
+2 人大机关
+3 政府机关
+4 法院机关
+5 检察机关
+6 政协机关
+7 军队机关
+255 其他机关"""@zh ;
+            rdfs:label "国家机关类型"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#graduatedPlace
+:graduatedPlace rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf :humanProperty ;
+                rdfs:comment """简单填写学校名称
+如更复杂的毕业信息，可使用EducationEvent描述"""@zh ;
+                rdfs:label "毕业院校"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#groupName
+:groupName rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf foaf:name ;
+           rdfs:domain foaf:Group ;
+           rdfs:label "团体名称"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#groupType
+:groupType rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf dct:type ;
+           rdfs:label "团体类型"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hdegree
+:hdegree rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf :humanProperty ;
+         rdfs:label "最高学位"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#hkMcTwPassNum
+:hkMcTwPassNum rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :humanProperty ;
+               rdfs:label "港澳台通行证"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#humanProperty
+:humanProperty rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain foaf:Person ;
+               rdfs:label "人具有的属性"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#humanRoleProperty
+:humanRoleProperty rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain :HumanRole ;
+                   rdfs:label "人在某环境下担当的角色的属性"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#identifyCardNum
+:identifyCardNum rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf :humanProperty ;
+                 rdfs:range xsd:integer ;
+                 rdfs:label "身份证件码"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#issuingDate
+:issuingDate rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf :eventProperty ;
+             rdfs:domain :CertificateEvent ;
+             rdfs:range xsd:dateTime ;
+             rdfs:comment "证书的颁发时间"@zh ;
+             rdfs:label "颁发日期"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#issuingOrgName
+:issuingOrgName rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf :eventProperty ;
+                rdfs:domain :CertificateEvent ;
+                rdfs:label "证书的颁发机关名称"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#languageSkill
+:languageSkill rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :humanProperty ;
+               rdfs:comment "比如： 英语4级， 日语2级等"@zh ;
+               rdfs:label "外语程度"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#lawFirmProperty
+:lawFirmProperty rdf:type owl:DatatypeProperty .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#leaderName
+:leaderName rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf :orgProperty ;
+            rdfs:domain [ rdf:type owl:Class ;
+                          owl:unionOf ( foaf:Group
+                                        foaf:Organization
+                                      )
+                        ] ;
+            rdfs:range xsd:string ;
+            rdfs:label "企业负责人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#legalRepresentative
+:legalRepresentative rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf :orgProperty ;
+                     rdfs:domain foaf:Organization ;
+                     rdfs:range xsd:string ;
+                     rdfs:label "企业法人姓名"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#licenseNum
+:licenseNum rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf dct:identifier ,
+                               :eventProperty ;
+            rdfs:domain :CertificateEvent ;
+            rdfs:comment "比如律师或律所的执业证号"@zh ;
+            rdfs:label "执业证号"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#locationProperty
+:locationProperty rdf:type owl:DatatypeProperty ;
+                  rdfs:domain vcard:Location .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#locationType
+:locationType rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf dct:type ,
+                                 :locationProperty ;
+              rdfs:domain vcard:Location ;
+              rdfs:comment """机构的办公场所是实体还是虚拟，比如
+自置， 租赁"""@zh ;
+              rdfs:label "场所类型"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#logo
+:logo rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf :orgProperty ;
+      rdfs:domain foaf:Organization ;
+      rdfs:label "商标"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#major
+:major rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf :humanProperty ;
+       rdfs:label "专业"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#maritalStatus
+:maritalStatus rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :humanProperty ,
+                                  foaf:status ;
+               rdfs:range [ rdf:type rdfs:Datatype ;
+                            owl:oneOf [ rdf:type rdf:List ;
+                                        rdf:first "divorce" ;
+                                        rdf:rest [ rdf:type rdf:List ;
+                                                   rdf:first "married" ;
+                                                   rdf:rest [ rdf:type rdf:List ;
+                                                              rdf:first "unmarried" ;
+                                                              rdf:rest [ rdf:type rdf:List ;
+                                                                         rdf:first "widowed" ;
+                                                                         rdf:rest rdf:nil
+                                                                       ]
+                                                            ]
+                                                 ]
+                                      ]
+                          ] ;
+               rdfs:comment "枚举值：未婚，已婚，离异，丧偶"@zh ;
+               rdfs:label "婚姻状态"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#militaryRank
+:militaryRank rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf :humanRoleProperty ;
+              rdfs:domain :HumanRole ;
+              rdfs:comment """枚举值：1 列兵
+2 上等兵
+3一级士官
+4二级士官
+5三级士官
+6四级士官
+7五级士官
+8六级士官
+9少尉
+10中尉
+11上尉
+12少校
+13中校
+14上校
+15大校
+16少将
+17中将
+18上将"""@zh ;
+              rdfs:label "军衔"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#nationality
+:nationality rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf :humanProperty ;
+             rdfs:label "国籍"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#nativePlaceName
+:nativePlaceName rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf :humanProperty ;
+                 rdfs:comment """object property中hasNativePlace关联地点实体，描述更丰富
+此处取值按 行政区划"""@zh ;
+                 rdfs:label "籍贯"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#occuredPlaceName
+:occuredPlaceName rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf :eventProperty ;
+                  rdfs:comment "比如毕业事件的毕业院校， 获得证书事件中的证书取得地"@zh ;
+                  rdfs:label "发生地"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#officialGrade
+:officialGrade rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :humanRoleProperty ;
+               rdfs:comment """枚举值：1 国家主席、副主席、总理级
+2 副总理、国务委员级
+3 部、省级
+4 副部、副省级
+5 司、局、地、厅级
+6 副司、局、地、厅级
+7 县、处级
+8 副县、处级
+9 正科级
+10 副科级
+11 科员级
+12 办事员级"""@zh ;
+               rdfs:label "职级"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#officialPosition
+:officialPosition rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf :position ;
+                  rdfs:comment """1 人大常委会正职领导
+2 政协正职领导
+3 人大常委会副职领导
+4 政协副职领导
+5 人大常委会委员
+6 政协常委"""@zh ;
+                  rdfs:label "官职"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#orgCode
+:orgCode rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf dct:identifier ;
+         rdfs:comment "组织机构代码证书上的编号"@zh ;
+         rdfs:label "组织机构代码"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#orgForm
+:orgForm rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf :orgProperty ;
+         rdfs:domain foaf:Organization ;
+         rdfs:comment "比如律所有： 国资，合伙，个人"@zh ;
+         rdfs:label "机构的组织形式"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#orgId
+:orgId rdf:type owl:DatatypeProperty ;
+       rdfs:subPropertyOf dct:identifier ;
+       rdfs:domain foaf:Organization ;
+       rdfs:range xsd:token ;
+       rdfs:label "组织编号"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#orgName
+:orgName rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf :orgProperty ,
+                            foaf:name ;
+         rdfs:domain foaf:Organization ;
+         rdfs:range xsd:string ;
+         rdfs:label "机构名称"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#orgProperty
+:orgProperty rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain foaf:Organization .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#orgStructure
+:orgStructure rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf :orgProperty ;
+              rdfs:domain foaf:Organization ;
+              rdfs:comment "比如，总所，分所， 办事处"@zh ;
+              rdfs:label "组织架构"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#orgType
+:orgType rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf dct:type ,
+                            :orgProperty ;
+         rdfs:domain foaf:Organization ;
+         rdfs:comment """枚举值：
+1.机构编制
+	机关  
+	事业单位   
+	中央编办直接管理机构编制的群众团体    
+	其他  
+2.民政 
+	社会团体  
+	民办非企业单位  
+	基金会  
+	其他 
+3.工商 
+	企业   
+	个体工商户  
+	农民专业合作社  
+4.其他"""@zh ;
+         rdfs:label "组织类型"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#orgUscc
+:orgUscc rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf dct:identifier ;
+         rdfs:domain foaf:Organization ;
+         rdfs:range xsd:token ;
+         rdfs:comment """标准： GB 32100-2015 法人和其他组织统一社会信用代码编码规则
+18位，数字和字母组成， 前8位可解析获得机构类型和所属行政区划"""@zh ;
+         rdfs:label "社会信用代码"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#otherHumanId
+:otherHumanId rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf :humanProperty ;
+              rdfs:range xsd:string ;
+              rdfs:comment "用字符描述，包含证件名称及编号等"@zh ;
+              rdfs:label "其它的用于体现身份的证件号码"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#otherOrgCode
+:otherOrgCode rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf dct:identifier ,
+                                 :orgProperty ;
+              rdfs:domain foaf:Organization ;
+              rdfs:label "组织其它证照"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#passportID
+:passportID rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf :humanProperty .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#penalty
+:penalty rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf :eventProperty ;
+         rdfs:domain :PracticeEvent ;
+         rdfs:comment "比如律师执业过程中的行政处罚， 行业处分， 行政处罚等"@zh ;
+         rdfs:label "事件进行过程中受到的处罚"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#permanentResidency
+:permanentResidency rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf :humanProperty ;
+                    rdfs:label "拥有永久居留权国家"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#personName
+:personName rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf :humanProperty ,
+                               foaf:name ;
+            rdfs:label "姓名"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#placeName
+:placeName rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf :locationProperty ,
+                              foaf:name ;
+           rdfs:domain vcard:Location ;
+           rdfs:comment "比如 故宫，第一上海中心"@zh ;
+           rdfs:label "地名"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#politicalStatus
+:politicalStatus rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf :humanProperty ,
+                                    foaf:status ;
+                 rdfs:range [ rdf:type rdfs:Datatype ;
+                              owl:oneOf [ rdf:type rdf:List ;
+                                          rdf:first "CPC_member" ;
+                                          rdf:rest [ rdf:type rdf:List ;
+                                                     rdf:first "CYLmember" ;
+                                                     rdf:rest [ rdf:type rdf:List ;
+                                                                rdf:first "JiuSan_member" ;
+                                                                rdf:rest [ rdf:type rdf:List ;
+                                                                           rdf:first "LaoGongParty_member" ;
+                                                                           rdf:rest [ rdf:type rdf:List ;
+                                                                                      rdf:first "MinGe_member" ;
+                                                                                      rdf:rest [ rdf:type rdf:List ;
+                                                                                                 rdf:first "MinJian_member" ;
+                                                                                                 rdf:rest [ rdf:type rdf:List ;
+                                                                                                            rdf:first "MinJin_member" ;
+                                                                                                            rdf:rest [ rdf:type rdf:List ;
+                                                                                                                       rdf:first "MinMeng_member" ;
+                                                                                                                       rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                  rdf:first "TaiMeng_member" ;
+                                                                                                                                  rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                             rdf:first "ZhiGongParty_member" ;
+                                                                                                                                             rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                        rdf:first "mass" ;
+                                                                                                                                                        rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                                   rdf:first "nonPartyMember" ;
+                                                                                                                                                                   rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                                              rdf:first "probationaryCPC_member" ;
+                                                                                                                                                                              rdf:rest rdf:nil
+                                                                                                                                                                            ]
+                                                                                                                                                                 ]
+                                                                                                                                                      ]
+                                                                                                                                           ]
+                                                                                                                                ]
+                                                                                                                     ]
+                                                                                                          ]
+                                                                                               ]
+                                                                                    ]
+                                                                         ]
+                                                              ]
+                                                   ]
+                                        ]
+                            ] ;
+                 rdfs:comment """枚举值：1 中共党员
+2 中共预备党员
+3 共青团员
+4 民革委员
+5 民盟盟员
+6 民建会员
+7 民进会员
+8 农工党党员
+9 致公党党员
+10 九三学社社员
+11 台盟盟员
+12 无党派民主人士
+13 群众"""@zh ;
+                 rdfs:label "政治面貌"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#position
+:position rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf :humanRoleProperty ;
+          rdfs:comment """合伙人是一种职位
+isPartner 可表达该语义， 可以明确是那个机构的合伙人"""@zh ;
+          rdfs:label "职位"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#postalAddress
+:postalAddress rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :contactInfo ;
+               rdfs:domain foaf:Organization ;
+               rdfs:label "邮寄地址"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#practiceScope
+:practiceScope rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :eventProperty ;
+               rdfs:domain :PracticeEvent ;
+               rdfs:label "从业范围"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#practiceStatus
+:practiceStatus rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf :eventProperty ,
+                                   foaf:status ;
+                rdfs:comment """个人或公司执业或营业状态， 比如
+正常营业
+停业"""@zh ;
+                rdfs:label "执业状态"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#practiceYear
+:practiceYear rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf :eventProperty ;
+              rdfs:comment "从事这份工作的时间长度"@zh ;
+              rdfs:label "工作年限"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#privateData
+:privateData rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf :dataSecurity ;
+             rdfs:label "隐私属性"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#profession
+:profession rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf :humanRoleProperty ;
+            rdfs:domain :HumanRole ;
+            rdfs:comment """参见： 2015版《中华人民共和国职业分类大典》
+8大类， 2322项"""@zh ;
+            rdfs:label "职业"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#publicData
+:publicData rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf :dataSecurity ;
+            rdfs:label "可以公开的属性"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#qqID
+:qqID rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf :chatID .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#registeredCapital
+:registeredCapital rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf :orgProperty ;
+                   rdfs:domain foaf:Organization ;
+                   rdfs:comment """格式要求 数量+货币种类
+比如  200,000美元"""@zh ;
+                   rdfs:label "注册资本金"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#religion
+:religion rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf :humanProperty ;
+          rdfs:label "宗教信仰"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#requiredData
+:requiredData rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf :dataSecurity ;
+              rdfs:label "指必填属性"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#residencePlace
+:residencePlace rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf :humanProperty ;
+                rdfs:comment "人的居住地或机构/公司的地址"@zh ;
+                rdfs:label "居住地"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#resume
+:resume rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf :humanProperty ;
+        rdfs:label "简历"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#roleName
+:roleName rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf :humanRoleProperty ,
+                             foaf:name ;
+          rdfs:label "角色名称"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#roleScope
+:roleScope rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf :humanRoleProperty ;
+           rdfs:comment "比如 基层， 中层"@zh ;
+           rdfs:label "执业范围"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#roleSpecialty
+:roleSpecialty rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :humanRoleProperty ;
+               rdfs:label "专业特长"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#roleStatus
+:roleStatus rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf :humanRoleProperty ,
+                               foaf:status ;
+            rdfs:comment """比如 正常
+暂停
+停业
+非正常
+吊销
+注销
+未考核
+未登记"""@zh ;
+            rdfs:label "执业状态"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#roleType
+:roleType rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf dct:type ,
+                             :humanRoleProperty ;
+          rdfs:domain :Agent ;
+          rdfs:comment "实习， 专职， 兼职， 外派"@zh ;
+          rdfs:label "类型"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#slogan
+:slogan rdf:type owl:DatatypeProperty ;
+        rdfs:subPropertyOf :orgProperty ;
+        rdfs:domain foaf:Organization ;
+        rdfs:label "组织的口号"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#squareMeasure
+:squareMeasure rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :locationProperty ;
+               rdfs:domain vcard:Location ;
+               rdfs:comment "单位平方米， 例如 4000平方米"@zh ;
+               rdfs:label "场地面积"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#startDate
+:startDate rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf :eventProperty .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#technicalTitle
+:technicalTitle rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf :humanRoleProperty ;
+                rdfs:label "职称"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#usedName
+:usedName rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf foaf:name ;
+          rdfs:label "曾用名"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#validityTime
+:validityTime rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf :eventProperty ;
+              rdfs:domain :PracticeEvent ;
+              rdfs:range xsd:dateTime ;
+              rdfs:comment "比如律师执照的有效期，身份证的有效期"@zh ;
+              rdfs:label "有效期"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#wChatID
+:wChatID rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf :chatID .
+
+
+###  http://www.w3.org/2006/vcard/ns#countryName
+vcard:countryName rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf foaf:name ;
+                  rdfs:domain vcard:Location ;
+                  rdfs:range xsd:string ;
+                  rdfs:comment """无国籍人为“无”
+取值可参考 iso-3166-1全球国家名称代码"""@zh ;
+                  rdfs:label "国家名"@zh .
+
+
+###  http://www.w3.org/2006/vcard/ns#email
+vcard:email rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf :contactInfo ;
+            rdfs:domain [ rdf:type owl:Class ;
+                          owl:unionOf ( foaf:Organization
+                                        foaf:Person
+                                      )
+                        ] ;
+            rdfs:range xsd:string ;
+            rdfs:label "电子信件"@zh .
+
+
+###  http://www.w3.org/2006/vcard/ns#formattedName
+vcard:formattedName rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf foaf:name ;
+                    rdfs:domain vcard:Location ,
+                                foaf:Organization ;
+                    rdfs:range xsd:string ;
+                    rdfs:label "规范名称"@zh .
+
+
+###  http://www.w3.org/2006/vcard/ns#mobileTel
+vcard:mobileTel rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf :contactInfo ;
+                rdfs:range xsd:positiveInteger ;
+                rdfs:label "移动电话"@zh .
+
+
+###  http://www.w3.org/2006/vcard/ns#nickName
+vcard:nickName rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf foaf:name ;
+               rdfs:label "别名"@zh .
+
+
+###  http://www.w3.org/2006/vcard/ns#photo
+vcard:photo rdf:type owl:DatatypeProperty ;
+            rdfs:domain [ rdf:type owl:Class ;
+                          owl:unionOf ( vcard:Location
+                                        foaf:Organization
+                                        foaf:Person
+                                      )
+                        ] .
+
+
+###  http://www.w3.org/2006/vcard/ns#postalCode
+vcard:postalCode rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf :locationProperty ;
+                 rdfs:domain vcard:Location ;
+                 rdfs:range xsd:integer ;
+                 rdfs:label "邮政编码"@zh .
+
+
+###  http://www.w3.org/2006/vcard/ns#region
+vcard:region rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf :locationProperty ;
+             rdfs:domain vcard:Location ;
+             rdfs:range xsd:string ;
+             rdfs:comment "取值 按行政区划"@zh ;
+             rdfs:label "省市自治区"@zh .
+
+
+###  http://www.w3.org/2006/vcard/ns#streetAddress
+vcard:streetAddress rdf:type owl:DatatypeProperty ;
+                    rdfs:domain [ rdf:type owl:Class ;
+                                  owl:unionOf ( vcard:Location
+                                                foaf:Organization
+                                              )
+                                ] ;
+                    rdfs:range xsd:string ;
+                    rdfs:label "街区地址"@zh .
+
+
+###  http://www.w3.org/2006/vcard/ns#tel
+vcard:tel rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf :contactInfo ;
+          rdfs:domain [ rdf:type owl:Class ;
+                        owl:unionOf ( foaf:Organization
+                                      foaf:Person
+                                    )
+                      ] ;
+          rdfs:label "固定电话"@zh .
+
+
+###  http://xmlns.com/foaf/0.1/age
+foaf:age rdf:type owl:DatatypeProperty ;
+         rdfs:subPropertyOf :humanProperty ;
+         rdfs:range xsd:integer ;
+         rdfs:label "年龄"@zh .
+
+
+###  http://xmlns.com/foaf/0.1/birthday
+foaf:birthday rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf :humanProperty ;
+              rdfs:label "生日"@zh .
+
+
+###  http://xmlns.com/foaf/0.1/gender
+foaf:gender rdf:type owl:DatatypeProperty ;
+            rdfs:subPropertyOf :humanProperty ;
+            rdfs:range [ rdf:type rdfs:Datatype ;
+                         owl:oneOf [ rdf:type rdf:List ;
+                                     rdf:first "female" ;
+                                     rdf:rest [ rdf:type rdf:List ;
+                                                rdf:first "male" ;
+                                                rdf:rest [ rdf:type rdf:List ;
+                                                           rdf:first "unknown" ;
+                                                           rdf:rest rdf:nil
+                                                         ]
+                                              ]
+                                   ]
+                       ] ;
+            rdfs:comment "枚举值：男，女，不详"@zh ;
+            rdfs:label "性别"@zh .
+
+
+###  http://xmlns.com/foaf/0.1/name
+foaf:name rdf:type owl:DatatypeProperty ;
+          rdfs:range xsd:string ;
+          rdfs:comment """各种名称的父类
+注： 语种，简称，全称 使用@
+比如 @en @abbr @full ；分别表示 英文名， 简称， 全称"""@zh ;
+          rdfs:label "名称"@zh .
+
+
+###  http://xmlns.com/foaf/0.1/status
+foaf:status rdf:type owl:DatatypeProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#AccusedPerson
+:AccusedPerson rdf:type owl:Class ;
+               rdfs:subClassOf :Defendant ;
+               rdfs:comment "被告，在刑事案件中称为被告人，即被公诉机关指控涉嫌犯罪的当事人"@zh ;
+               rdfs:label "被告人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#ActingClerk
+:ActingClerk rdf:type owl:Class ;
+             rdfs:subClassOf :ParticipantInTrial ;
+             rdfs:comment "临时代替书记员进行庭审记录工作的人员"@zh ;
+             rdfs:label "代书记员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#ActingJudge
+:ActingJudge rdf:type owl:Class ;
+             rdfs:subClassOf :Adjudicator ,
+                             :MemberOfCollegialPanel ;
+             rdfs:comment "人民法院内部临时代行审判员职务的助理审判员"@zh ;
+             rdfs:label "代理审判员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#ActingProcurator
+:ActingProcurator rdf:type owl:Class ;
+                  rdfs:subClassOf :Protestor ,
+                                  :PublicProsecutor ;
+                  rdfs:comment "所有案件类型均可能出现，代理检察官是因为工作需要，由上级检察院或者他同级检察院借调来的检察官"@zh ;
+                  rdfs:label "代理检察员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Adjudicator
+:Adjudicator rdf:type owl:Class ;
+             rdfs:subClassOf :JudicialStaff ;
+             rdfs:comment "诉讼中，对案件进行审理和判决的机构和人"@zh ;
+             rdfs:label "审判主体"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Agent
+:Agent rdf:type owl:Class ;
+       rdfs:comment """人或物在某种环境或情形下是什么， 附着的身份或地位
+与foaf:Person，foaf:Organization相区别，是可变化的，侧重描述在上下文环境中人或物的地位和职责
+相对地，foaf:Person，foaf:Organization指稳定、可见的实体"""@zh ;
+       rdfs:label "角色身份, 行为主体，施事者，施动者"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Appellant
+:Appellant rdf:type owl:Class ;
+           rdfs:subClassOf :Litigant ;
+           rdfs:comment "所有案件均可能出现，具有上诉权，并对第一审人民法院的裁判不服而提起上诉的主体"@zh ;
+           rdfs:label "上诉人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Appellee
+:Appellee rdf:type owl:Class ;
+          rdfs:subClassOf :Litigant ;
+          rdfs:comment "所有案件均可能出现，是指不服一审法院的裁判而提起上诉的人的对方当事人"@zh ;
+          rdfs:label "被上诉人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Applicant
+:Applicant rdf:type owl:Class ;
+           rdfs:subClassOf :Litigant ;
+           rdfs:comment """所有案件均可能出现
+比如：民事特别程序申请人、撤销仲裁裁决申请人"""@zh ;
+           rdfs:label "申请人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#ApplicantForRetrial
+:ApplicantForRetrial rdf:type owl:Class ;
+                     rdfs:subClassOf :Litigant ;
+                     rdfs:comment "所有案件均可能出现，申请再审的当事人"@zh ;
+                     rdfs:label "再审申请人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#ApplicationExecutor
+:ApplicationExecutor rdf:type owl:Class ;
+                     rdfs:subClassOf :Litigant ;
+                     rdfs:comment "所有案件类型都可能出现，中向人民法院提出申请，要求根据生效法律文书，采取执行措施的当事人"@zh ;
+                     rdfs:label "申请执行人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#AppointedAgent
+:AppointedAgent rdf:type owl:Class ;
+                rdfs:subClassOf :LegalAgent ;
+                rdfs:comment """所有案件均可能出现，是指根据法院或指定单位的指定而产生代理权的代理。通常适用于两种情况：（1）在民事诉讼中，当事人系无民事行为能力或限制民事行为能力人，而又没有法定代理人的；（2）法定代理人之间互相推诿代理责任的，由法院指定其中一人为代理人
+2017年《民法通则》中已经没有"""@zh ;
+                rdfs:label "指定代理人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#AppraisalCenter
+:AppraisalCenter rdf:type owl:Class ;
+                 rdfs:subClassOf foaf:Organization ;
+                 rdfs:label "鉴定中心"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Appraiser
+:Appraiser rdf:type owl:Class ;
+           rdfs:subClassOf :JudicalSupport ;
+           rdfs:comment "所有案件类型都可能出现，在诉讼活动中鉴定人运用科学技术或者专门知识对诉讼涉及的专门性问题进行鉴别和判断并提供鉴定意见的活动"@zh ;
+           rdfs:label "鉴定人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#ArbitrationCommission
+:ArbitrationCommission rdf:type owl:Class ;
+                       rdfs:subClassOf foaf:Organization ;
+                       rdfs:comment "所有案件类型都可能出现，是独立、公正、高效地解决平等主体的公民、法人和其他组织之间发生的合同纠纷和其他财产权益纠纷的常设仲裁机构"@zh ;
+                       rdfs:label "仲裁委员会"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#AssistantJudge
+:AssistantJudge rdf:type owl:Class ;
+                rdfs:subClassOf :Adjudicator ;
+                rdfs:comment "所有案件都可能出现，是指专职审判辅助工作的司法人员"@zh ;
+                rdfs:label "法官助理"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#AssistantProcurator
+:AssistantProcurator rdf:type owl:Class ;
+                     rdfs:subClassOf :Protestor ,
+                                     :PublicProsecutor ;
+                     rdfs:comment "所有案件类型均可能出现，虽然是检察官，自己可以独立办案，但是经验不足，资质还是尚浅，级别较低，主要还是协助主办检察官的工作"@zh ;
+                     rdfs:label "助理检察员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Bailiff
+:Bailiff rdf:type owl:Class ;
+         rdfs:subClassOf :JudicalSupport ;
+         rdfs:comment "所有案件类型都可能出现，司法机关所设执行特定任务的警察"@zh ;
+         rdfs:label "法警"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Certificate
+:Certificate rdf:type owl:Class ;
+             rdfs:subClassOf :Document ;
+             rdfs:comment "比如 毕业证，合格证，文凭"@zh ;
+             rdfs:label "证书"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#CertificateEvent
+:CertificateEvent rdf:type owl:Class ;
+                  rdfs:subClassOf :Event ;
+                  rdfs:comment "可用于描述律师如何获得执业执照等各种有认证的证明文书"@zh ;
+                  rdfs:label "获得证书事件"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Clerk
+:Clerk rdf:type owl:Class ;
+       rdfs:subClassOf :ParticipantInTrial ;
+       rdfs:comment "所有案件都可能出现，是人民法院和人民检察院内担任办理案件的记录工作和有关事项的人员，并协助办理一系列司法辅助工作"@zh ;
+       rdfs:label "书记员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Company
+:Company rdf:type owl:Class ;
+         owl:equivalentClass :EnterpriseCorporation ;
+         rdfs:subClassOf foaf:Organization ;
+         rdfs:label "公司"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#CompensationClaimant
+:CompensationClaimant rdf:type owl:Class ;
+                      rdfs:subClassOf :Litigant ;
+                      rdfs:comment "所有案件均可能出现，是指因行政机关及其工作人员违法执行职务而遭受损害，有权请求国家予以赔偿的人"@zh ;
+                      rdfs:label "赔偿请求人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#CompensationCommission
+:CompensationCommission rdf:type owl:Class ;
+                        rdfs:subClassOf :ParticipantInTrial ;
+                        rdfs:comment "是人民法院审理司法赔偿案件的审判组织"@zh ;
+                        rdfs:label "赔偿委员会"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#CompensationOrgan
+:CompensationOrgan rdf:type owl:Class ;
+                   rdfs:subClassOf :JudicialAdministration ;
+                   rdfs:comment "所有案件均可能出现，是指行使国家侦查、检察、审判、看守所及监狱管理职权的机关及其工作人员在行使职权时侵犯公民、法人和其他组织的合法权益造成损害的机关"@zh ;
+                   rdfs:label "赔偿义务机关"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#CorporationForProfit
+:CorporationForProfit rdf:type owl:Class ;
+                      rdfs:subClassOf :LegalEntity ;
+                      rdfs:label "盈利法人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Court
+:Court rdf:type owl:Class ;
+       rdfs:subClassOf :GovJudiciary ;
+       rdfs:label "法院"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Criminal
+:Criminal rdf:type owl:Class ;
+          rdfs:subClassOf :Litigant ;
+          rdfs:comment "刑事案件中出现，是指因犯罪而服刑役的人"@zh ;
+          rdfs:label "罪犯"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Declarant
+:Declarant rdf:type owl:Class ;
+           rdfs:subClassOf :Litigant ;
+           rdfs:comment "所有案件均可能出现，不服已经生效的裁决，向人民法院或者人民检察院提出的要求重新审理案件的主体"@zh ;
+           rdfs:label "申诉人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Defendant
+:Defendant rdf:type owl:Class ;
+           rdfs:subClassOf :Litigant ;
+           rdfs:comment """所有案件均可能涉及
+在民事案件中，是指侵犯原告利益，需要追究民事责任，并经法院通知其应诉的人；
+在行政诉讼中，公民、法人或其他组织认为某具体行政行为侵犯其合法权益而依法向人民法院提起的诉讼中，做出该具体行政行为的行政机关及人员。
+在刑事案件中被称为被告人"""@zh ;
+           rdfs:label "被告"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Defender
+:Defender rdf:type owl:Class ;
+          rdfs:subClassOf :EntrustedAgent ,
+                          :LitigiousParticipant ;
+          rdfs:comment "刑事案件中出现，指接受被追诉一方委托或者受人民法院指定，帮助犯罪嫌疑人、被告人行使辩护权以维护其合法权益的人"@zh ;
+          rdfs:label "辩护人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#DefendingPartyToApplication
+:DefendingPartyToApplication rdf:type owl:Class ;
+                             rdfs:subClassOf :Litigant ;
+                             rdfs:comment "所有案件均可能出现，与申请人相对应"@zh ;
+                             rdfs:label "被申请人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Document
+:Document rdf:type owl:Class ;
+          rdfs:subClassOf :Object ;
+          rdfs:label "文件"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#EducationEvent
+:EducationEvent rdf:type owl:Class ;
+                rdfs:subClassOf :Event ;
+                rdfs:comment "用于描述某人受教育的过程，比如入学毕业地点等"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#EnterpriseCorporation
+:EnterpriseCorporation rdf:type owl:Class ;
+                       rdfs:subClassOf :CorporationForProfit ;
+                       rdfs:label "企业法人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#EntrustedAgent
+:EntrustedAgent rdf:type owl:Class ;
+                rdfs:subClassOf :LegalAgent ;
+                rdfs:comment """所有案件均可能出现，是指按照被代理人的委托行使代理权的人。可被委托的人包括：1、律师、法律服务工作者 2、当事人的近亲属或工作人员；3、当事人所在社区、单位以及有关社会团体推荐的公民
+代理人的资格基于被代理人的单方授权"""@zh ;
+                rdfs:label "委托代理人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Event
+:Event rdf:type owl:Class ;
+       rdfs:comment "事件的定义采用 cn.schema的定义， 详细见 https://schema.org.cn/Event"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#ExecutiveOrgan
+:ExecutiveOrgan rdf:type owl:Class ;
+                rdfs:subClassOf :JudicialAdministration ;
+                rdfs:comment "所有案件类型都可能出现，负责执行的机关"@zh ;
+                rdfs:label "执行机关"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#FarmHousehold
+:FarmHousehold rdf:type owl:Class ;
+               rdfs:subClassOf foaf:Group ;
+               rdfs:label "农村承包经营户"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#GovJudiciary
+:GovJudiciary rdf:type owl:Class ;
+              rdfs:subClassOf :GovOrg ;
+              rdfs:comment "包括：人民代表大会，国务院，中央军事委员会，地方各级人民代表大会和地方各级人民政府，民族自治地方的自治机关，人民法院，人民检察院"@zh ;
+              rdfs:label "国家司法机关"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#GovOfficer
+:GovOfficer rdf:type owl:Class ;
+            rdfs:subClassOf :HumanRole ;
+            rdfs:comment "Government officer, 指一切国家机关中从事公务的人员。比国家机关工作人员和国家公务员的范围宽"@zh ;
+            rdfs:label "公务员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#GovOrg
+:GovOrg rdf:type owl:Class ;
+        rdfs:subClassOf foaf:Organization ;
+        rdfs:comment "government organization"@zh ;
+        rdfs:label "国家机关"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#HumanRole
+:HumanRole rdf:type owl:Class ;
+           rdfs:subClassOf :Agent ;
+           rdfs:comment "例： 职务是人大常委会副职领导，职级为 省部级的某人"@zh ;
+           rdfs:label "人担任的角色"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#IdentifyingWitness
+:IdentifyingWitness rdf:type owl:Class ;
+                    rdfs:subClassOf :JudicalSupport ;
+                    rdfs:comment "一般在刑事案件中出现，辨认重要当事人和物品文件的人"@zh ;
+                    rdfs:label "辨认人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#IncidentalCivilActionDefendant
+:IncidentalCivilActionDefendant rdf:type owl:Class ;
+                                rdfs:subClassOf :Defendant ;
+                                rdfs:comment "只在刑事案件中出现，是指附带民事诉讼中依法应当履行民事赔偿责任的人。通常就是刑事案件的被告人"@zh ;
+                                rdfs:label "附带民事诉讼被告人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#IndictedPerson
+:IndictedPerson rdf:type owl:Class ;
+                rdfs:subClassOf :Litigant ;
+                rdfs:comment "所有案件中均可能出现，被起诉人起诉的当事人"@zh ;
+                rdfs:label "被起诉人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#IndividualBusiness
+:IndividualBusiness rdf:type owl:Class ;
+                    rdfs:subClassOf foaf:Group ;
+                    rdfs:label "个体工商户"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Inspectors
+:Inspectors rdf:type owl:Class ;
+            rdfs:subClassOf :JudicalSupport ;
+            rdfs:comment "所有案件类型都可能出现，主要是指对人、事、物等进行检查的人员"@zh ;
+            rdfs:label "检验人员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Institution
+:Institution rdf:type owl:Class ;
+             rdfs:subClassOf foaf:Organization ;
+             rdfs:label "事业单位"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#InstitutionCorporation
+:InstitutionCorporation rdf:type owl:Class ;
+                        rdfs:subClassOf :NonProfitCorporation ;
+                        rdfs:label "事业单位法人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#InternClerk
+:InternClerk rdf:type owl:Class ;
+             rdfs:subClassOf :ParticipantInTrial ;
+             rdfs:comment "一种处于实习状态的书记员"@zh ;
+             rdfs:label "见习书记员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#InvestigationAuthority
+:InvestigationAuthority rdf:type owl:Class ;
+                        rdfs:subClassOf :JudicialAdministration ;
+                        rdfs:label "侦查机关"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#JucialReconsideration
+:JucialReconsideration rdf:type owl:Class ;
+                       rdfs:subClassOf :JudicialAdministration ;
+                       rdfs:label "司法复议机关"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Judge
+:Judge rdf:type owl:Class ;
+       rdfs:subClassOf :Adjudicator ,
+                       :MemberOfCollegialPanel ;
+       rdfs:comment "所有案件都可能出现，负责审判案件的法庭工作人员"@zh ;
+       rdfs:label "法官"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#JudicalSupport
+:JudicalSupport rdf:type owl:Class ;
+                rdfs:subClassOf :PublicAgentInTrial ;
+                rdfs:comment "包括人和机构"@zh ;
+                rdfs:label "司法辅助方"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#JudicialAdministration
+:JudicialAdministration rdf:type owl:Class ;
+                        rdfs:subClassOf :OrgRole ,
+                                        :PublicAgentInTrial ;
+                        rdfs:comment "依法行使司法权的国家机关，包括行使审判权的人民法院，行使法律监督权的人民检察院，在刑事诉讼中参加一定诉讼活动的公安机关以及负有监管职责的监狱"@zh ;
+                        rdfs:label "司法行政机关"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#JudicialStaff
+:JudicialStaff rdf:type owl:Class ;
+               rdfs:subClassOf :HumanRole ,
+                               :PublicAgentInTrial ;
+               rdfs:label "司法行政机关工作人员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Juvenile
+:Juvenile rdf:type owl:Class ;
+          rdfs:subClassOf foaf:Person ,
+                          [ rdf:type owl:Restriction ;
+                            owl:onProperty foaf:age ;
+                            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+                            owl:onDataRange [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:integer ;
+                                              owl:withRestrictions ( [ xsd:maxInclusive 10
+                                                                     ]
+                                                                   )
+                                            ]
+                          ] ;
+          rdfs:comment "未成年人有且只有一个年龄属性，且必须<=17"@zh ;
+          rdfs:label "未成年人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#LaborArbitrationCommission
+:LaborArbitrationCommission rdf:type owl:Class ;
+                            rdfs:subClassOf :ArbitrationCommission ;
+                            rdfs:comment "所有案件类型都可能出现，劳动争议的法定前置程序受理和处理机构"@zh ;
+                            rdfs:label "劳动仲裁委员会"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#LawFirm
+:LawFirm rdf:type owl:Class ;
+         rdfs:subClassOf foaf:Organization ;
+         rdfs:label "律师事务所"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Lawyer
+:Lawyer rdf:type owl:Class ;
+        rdfs:subClassOf :HumanRole ;
+        rdfs:label "律师"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#LegalAgent
+:LegalAgent rdf:type owl:Class ;
+            rdfs:subClassOf :PrivateAgentInTrial ;
+            rdfs:comment "以被代理人的名义，在一定权限内代其进行有一定法律意义的活动的人。 可以是自然人、法人或非法人组织"@zh ;
+            rdfs:label "代理人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#LegalCounsel
+:LegalCounsel rdf:type owl:Class ;
+              rdfs:subClassOf :HumanRole ;
+              rdfs:comment """狭义指提供法律服务的执业律师
+广义指在法律事务所机构中的人员， 比如法人或其他组织内设置的法律事务机构中的人员， 如公司法务"""@zh ;
+              rdfs:label "法律顾问"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#LegalEntity
+:LegalEntity rdf:type owl:Class ;
+             rdfs:subClassOf foaf:Organization ;
+             owl:disjointWith foaf:Person ;
+             rdfs:comment """与“自然人”相对。按照法定程序设立，有一定的组织机构和独立的财产，依法独立享有民事权利和承担民事义务，并能以自己的名义在法院起诉和应诉的社会组织。
+以公民不同的是，法人的行为能力通常是由法定的法人机关来执行的"""@zh ;
+             rdfs:label "法人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#LegalWorker
+:LegalWorker rdf:type owl:Class ;
+             rdfs:subClassOf :HumanRole ;
+             rdfs:comment """中国特有， 主要是为了解决乡镇聘请律师难的问题
+与律师的准入资格不同，不需通过司法考试，高中文化，掌握基本法律知识即可"""@zh ;
+             rdfs:label "法律工作者"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#License
+:License rdf:type owl:Class ;
+         rdfs:subClassOf :Document ;
+         rdfs:comment "许可证，执照，授权"@zh ;
+         rdfs:label "执照"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Litigant
+:Litigant rdf:type owl:Class ;
+          rdfs:subClassOf :LitigiousParticipant ;
+          rdfs:comment "指民事诉讼中以自己的名义要求人民法院保护民事权利或者法律关系、受人民法院裁判约束的起诉方和被诉方。"@zh ;
+          rdfs:label "当事人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#LitigationAgent
+:LitigationAgent rdf:type owl:Class ;
+                 rdfs:subClassOf :EntrustedAgent ,
+                                 :LitigiousParticipant ;
+                 rdfs:comment "只能是自然人"@zh ;
+                 rdfs:label "诉讼代理人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#LitigationRepresentative
+:LitigationRepresentative rdf:type owl:Class ;
+                          rdfs:subClassOf :Litigant ;
+                          rdfs:comment "指为了便于诉讼，由人数众多的一方当事人推选出来，代表其利益实施诉讼行为的人"@zh ;
+                          rdfs:label "诉讼代表人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#LitigiousParticipant
+:LitigiousParticipant rdf:type owl:Class ;
+                      rdfs:subClassOf :PrivateAgentInTrial ;
+                      rdfs:label "诉讼参加人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Man
+:Man rdf:type owl:Class ;
+     rdfs:subClassOf foaf:Person ,
+                     [ rdf:type owl:Restriction ;
+                       owl:onProperty foaf:gender ;
+                       owl:hasValue "male"
+                     ] ;
+     rdfs:label "男人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#MemberOfCollegialPanel
+:MemberOfCollegialPanel rdf:type owl:Class ;
+                        rdfs:subClassOf :ParticipantInTrial ;
+                        rdfs:label "合议庭成员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Money
+:Money rdf:type owl:Class ;
+       rdfs:subClassOf :Object ;
+       rdfs:label "财产"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#NonProfitCorporation
+:NonProfitCorporation rdf:type owl:Class ;
+                      rdfs:subClassOf :LegalEntity ;
+                      rdfs:label "非盈利法人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Notary
+:Notary rdf:type owl:Class ;
+        rdfs:subClassOf :JudicalSupport ;
+        rdfs:comment "公证员是指符合法定条件,在公证机构从事公证业务的执业人员"@zh ;
+        rdfs:label "公证员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#NotaryOffice
+:NotaryOffice rdf:type owl:Class ;
+              rdfs:subClassOf foaf:Organization ;
+              rdfs:comment """所有案件类型都可能出现，不以营利为目的，依法独立行使公证职能、承担民事责任的证明机构
+公证机构办理下列公证事项：
+        （一）合同；
+        （二）继承；
+        （三）委托、声明、赠与、遗嘱；
+        （四）财产分割；
+        （五）招标投标、拍卖；
+        （六）婚姻状况、亲属关系、收养关系；
+        （七）出生、生存、死亡、身份、经历、学历、学位、职务、职称、有无违法犯罪记录；
+        （八）公司章程；
+        （九）保全证据；
+        （十）文书上的签名、印鉴、日期，文书的副本、影印本与原本相符；
+        （十一）自然人、法人或者其他组织自愿申请办理的其他公证事项。"""@zh ;
+              rdfs:label "公证处"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Object
+:Object rdf:type owl:Class ;
+        rdfs:label "物品"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#OrgRole
+:OrgRole rdf:type owl:Class ;
+         rdfs:subClassOf :Agent .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Outsider
+:Outsider rdf:type owl:Class ;
+          rdfs:subClassOf :LitigiousParticipant ;
+          rdfs:comment """所有案件类型都有可能出现，对案件的裁决或者执行提出异议的人
+异议人（案外人、利害关系人）"""@zh ;
+          rdfs:label "案外人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#ParticipantInTrial
+:ParticipantInTrial rdf:type owl:Class ;
+                    rdfs:subClassOf :Agent ;
+                    rdfs:label "审判参与人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#PeopleAssessor
+:PeopleAssessor rdf:type owl:Class ;
+                rdfs:subClassOf :Adjudicator ;
+                rdfs:comment "负责法庭审判工作中的事实认定问题"@zh ;
+                rdfs:label "人民陪审员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#PersonAgainstApplicantForRetrial
+:PersonAgainstApplicantForRetrial rdf:type owl:Class ;
+                                  rdfs:subClassOf :Litigant ;
+                                  rdfs:comment "所有案件均可能出现，与申请人相对应"@zh ;
+                                  rdfs:label "再审被申请人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#PersonAgainstWhomExecution
+:PersonAgainstWhomExecution rdf:type owl:Class ;
+                            rdfs:subClassOf :Litigant ;
+                            rdfs:label "被申请执行人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#PersonSubjectToEnforcement
+:PersonSubjectToEnforcement rdf:type owl:Class ;
+                            rdfs:subClassOf :Litigant ;
+                            rdfs:comment "所有案件类型都可能出现，与申请执行人相对应"@zh ;
+                            rdfs:label "被执行人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Plaintiff
+:Plaintiff rdf:type owl:Class ;
+           rdfs:subClassOf :Litigant ;
+           rdfs:label "原告"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#PlaintiffInCriminalCase
+:PlaintiffInCriminalCase rdf:type owl:Class ;
+                         rdfs:subClassOf :Litigant ;
+                         rdfs:comment "轻微刑事案件中出现，以个人名义直接向人民法院提起诉讼，要求追究被告人刑事责任的一方当事人"@zh ;
+                         rdfs:label "自诉人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#PlaintiffOfIncidentalCivilAction
+:PlaintiffOfIncidentalCivilAction rdf:type owl:Class ;
+                                  rdfs:subClassOf :Plaintiff ;
+                                  rdfs:comment "只在刑事案件中出现，是指因被告人的犯罪行为而遭受物质损失，可在刑事诉讼过程中提起附带民事诉讼的人"@zh ;
+                                  rdfs:label "附带民事诉讼原告人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#PracticeEvent
+:PracticeEvent rdf:type owl:Class ;
+               rdfs:subClassOf :Event ;
+               rdfs:comment "可描述律师或机构的执业信息， 注律所也有执业事件"@zh ;
+               rdfs:label "执业事件"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#PresidingJudge
+:PresidingJudge rdf:type owl:Class ;
+                rdfs:subClassOf :Adjudicator ,
+                                :MemberOfCollegialPanel ;
+                rdfs:comment "所有案件都可能出现，负责审判案件的主要人员"@zh ;
+                rdfs:label "审判长"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Prison
+:Prison rdf:type owl:Class ;
+        rdfs:subClassOf :GovJudiciary ;
+        rdfs:label "监狱"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#PrivateAgentInTrial
+:PrivateAgentInTrial rdf:type owl:Class ;
+                     rdfs:subClassOf :Agent ;
+                     rdfs:label "司法中的私权利方，具有私人（个人）性质"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Procuratorate
+:Procuratorate rdf:type owl:Class ;
+               rdfs:subClassOf :GovJudiciary ;
+               rdfs:comment ""@zh ;
+               rdfs:label "检察院"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#ProsecutingAuthority
+:ProsecutingAuthority rdf:type owl:Class ;
+                      rdfs:subClassOf :JudicialAdministration ;
+                      rdfs:comment "只在刑事案件中出现，代表国家执行公诉职能，依法向法院提请追究被告人刑事责任的机关"@zh ;
+                      rdfs:label "公诉机关"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Prosecutor
+:Prosecutor rdf:type owl:Class ;
+            rdfs:subClassOf :PublicProsecutor ,
+                            [ rdf:type owl:Class ;
+                              owl:unionOf ( :Protestor
+                                            :PublicProsecutor
+                                          )
+                            ] ;
+            rdfs:comment "公诉人，检察官， 所有案件类型均可能出现，依法行使国家检察权的检察人员"@zh ;
+            rdfs:label "检察官"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#ProtestingAuthority
+:ProtestingAuthority rdf:type owl:Class ;
+                     rdfs:subClassOf :JudicialAdministration ;
+                     rdfs:comment "所有案件均可能出现，抗诉是指人民检察院对人民法院的审判实行法律监督的重要形式"@zh ;
+                     rdfs:label "抗诉机关"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Protestor
+:Protestor rdf:type owl:Class ;
+           rdfs:subClassOf :JudicialStaff ;
+           rdfs:label "抗诉人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#PublicAgentInTrial
+:PublicAgentInTrial rdf:type owl:Class ;
+                    rdfs:subClassOf :Agent ;
+                    rdfs:label "司法中的公权力方，基于社会公众的意志"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#PublicBenefitCorporation
+:PublicBenefitCorporation rdf:type owl:Class ;
+                          rdfs:subClassOf :NonProfitCorporation ;
+                          rdfs:comment "以谋求社会公益为目的而设立的社团法人"@zh ;
+                          rdfs:label "公益法人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#PublicProsecutor
+:PublicProsecutor rdf:type owl:Class ;
+                  rdfs:subClassOf :JudicialStaff ;
+                  rdfs:label "公诉人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#PublicSecurityBureau
+:PublicSecurityBureau rdf:type owl:Class ;
+                      rdfs:subClassOf :GovJudiciary ;
+                      rdfs:comment "所有案件类型都可能出现，依法在管辖范围内承担责任和义务"@zh ;
+                      rdfs:label "公安局"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#QQGroup
+:QQGroup rdf:type owl:Class ;
+         rdfs:subClassOf foaf:Group ;
+         rdfs:label "QQ群"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#ReconsiderationAdministration
+:ReconsiderationAdministration rdf:type owl:Class ;
+                               rdfs:subClassOf :JudicialAdministration ;
+                               rdfs:comment "只在行政案件中出现，行政复议机关是指依照法律的规定，有权受理行政复议申请，依法对具体行政行为进行审查并作出裁决的行政机关"@zh ;
+                               rdfs:label "行政复议机关"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Recorder
+:Recorder rdf:type owl:Class ;
+          rdfs:subClassOf :JudicalSupport ;
+          rdfs:comment "进行法庭记录人员，包含记录员和速录员"@zh ;
+          rdfs:label "速录员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Respondent
+:Respondent rdf:type owl:Class ;
+            rdfs:subClassOf :Litigant ;
+            rdfs:comment "所有案件均可能出现，与申诉人相对应"@zh ;
+            rdfs:label "被申诉人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#SocialGroup
+:SocialGroup rdf:type owl:Class ;
+             rdfs:subClassOf foaf:Organization ;
+             rdfs:label "社会团体"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#SocietyCorporation
+:SocietyCorporation rdf:type owl:Class ;
+                    rdfs:subClassOf :NonProfitCorporation ;
+                    rdfs:comment "具有法人资格的社团组织"@zh ;
+                    rdfs:label "社团法人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#StatutoryAgent
+:StatutoryAgent rdf:type owl:Class ;
+                rdfs:subClassOf :LegalAgent ;
+                rdfs:comment """所有类型案件都可以出现，是指根据法律规定，代理无诉讼行为能力的当事人进行诉讼，直接行使诉讼代理权的自然人或法人或非法人组织
+代理人的资格的取得基于法律的直接规定"""@zh ;
+                rdfs:label "法定代理人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#StatutoryRepresentative
+:StatutoryRepresentative rdf:type owl:Class ;
+                         rdfs:subClassOf :PrivateAgentInTrial ;
+                         rdfs:comment "所有案件类型均可能出现，是指依法代表法人行使民事权利，履行民事义务的主要负责人"@zh ;
+                         rdfs:label "法定代表人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Suitor
+:Suitor rdf:type owl:Class ;
+        rdfs:subClassOf :Litigant ;
+        rdfs:label "起诉人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Surveyor
+:Surveyor rdf:type owl:Class ;
+          rdfs:subClassOf :JudicalSupport ;
+          rdfs:comment "所有案件类型都可能出现，勘验物证或现场的人的统称"@zh ;
+          rdfs:label "勘验人员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#ThirdPerson
+:ThirdPerson rdf:type owl:Class ;
+             rdfs:subClassOf :LitigiousParticipant ;
+             rdfs:comment "所有案件均可能出现，是指对于已经开始的诉讼，以该诉讼的原被告为被告提出独立的诉讼请求，或者由该诉讼中的原告或者被告引进后主张独立的利益，或者为了自己的利益，辅助该诉讼一方当事人进行诉讼的参加人"@zh ;
+             rdfs:label "第三人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Translator
+:Translator rdf:type owl:Class ;
+            rdfs:subClassOf :JudicalSupport ;
+            rdfs:comment "所有案件类型都可能出现，翻译语言的工作人员"@zh ;
+            rdfs:label "翻译人员"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Victim
+:Victim rdf:type owl:Class ;
+        rdfs:subClassOf :Litigant ;
+        rdfs:comment "刑事案件中出现，是合法权益遭受不法行为直接侵害的人"@zh ;
+        rdfs:label "受害人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Witness
+:Witness rdf:type owl:Class ;
+         rdfs:subClassOf :JudicalSupport ;
+         rdfs:comment "所有类型案件都可以出现，在案件中作证的人"@zh ;
+         rdfs:label "证人"@zh .
+
+
+###  http://www.frdc.com/legalDocument/ontologies/legalRole#Woman
+:Woman rdf:type owl:Class ;
+       rdfs:subClassOf foaf:Person ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty foaf:gender ;
+                         owl:hasValue "female"
+                       ] ;
+       rdfs:label "女人"@zh .
+
+
+###  http://www.w3.org/2006/vcard/ns#Location
+vcard:Location rdf:type owl:Class ;
+               rdfs:comment "比如 某公司的办公场所"@zh ;
+               rdfs:label "地点,场所"@zh .
+
+
+###  http://xmlns.com/foaf/0.1/Group
+foaf:Group rdf:type owl:Class ;
+           rdfs:comment """这里指非正式的组织， 比如自组织的各人集合，小组
+非正式组织只有不成文的行为准则,约束力不大，非正式组织只有自然形成的核心人物,无层级结构
+正式组织比较严密,人员固定.非正式组织相反,易受偶然因素影响
+本处将个体户放在GROUP中"""@zh ;
+           rdfs:label "团体"@zh .
+
+
+###  http://xmlns.com/foaf/0.1/Organization
+foaf:Organization rdf:type owl:Class ;
+                  owl:disjointWith foaf:Person ;
+                  rdfs:comment "这里指正式组织， 有意创造具有一定形式的关系，通常用组织结构图来说明"@zh ;
+                  rdfs:label "组织"@zh .
+
+
+###  http://xmlns.com/foaf/0.1/Person
+foaf:Person rdf:type owl:Class ;
+            rdfs:comment """基于自然规律产生的人。与“公民”概念相通用，其不同之处在于自然人强调人的自然属性，而公民则强调人的社会属性
+自然人在民事法律上是民事法律关系主体，在刑事法律上自然人是指达到一定的责任年龄，具有责任能力，可以作为犯罪主体的人"""@zh ;
+            rdfs:label "人"@zh .
+
+
+###  Generated by the OWL API (version 4.2.5.20160517-0735) https://github.com/owlcs/owlapi

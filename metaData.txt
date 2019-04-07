@@ -1,0 +1,40 @@
+http://xmlns.com/foaf/0.1/Person	http://xmlns.com/foaf/0.1/gender
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#identifyCardNum
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#personName
+**http://www.frdc.com/legalDocument/ontologies/legalRole#contactInfo	http://xmlns.com/foaf/0.1/Person	
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#award
+**http://www.frdc.com/legalDocument/ontologies/legalRole#qqID	http://xmlns.com/foaf/0.1/Person	
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#ethnicGroup
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#humanProperty
+**http://www.frdc.com/legalDocument/ontologies/legalRole#fax	http://xmlns.com/foaf/0.1/Person	
+**http://www.w3.org/2006/vcard/ns#mobileTel	http://xmlns.com/foaf/0.1/Person	
+**http://www.frdc.com/legalDocument/ontologies/legalRole#wChatID	http://xmlns.com/foaf/0.1/Person	
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#religion
+**http://www.frdc.com/legalDocument/ontologies/legalRole#leaderName	
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#passportID
+**http://www.frdc.com/legalDocument/ontologies/legalRole#foundedDate	
+**http://www.frdc.com/legalDocument/ontologies/legalRole#HPUrl	http://xmlns.com/foaf/0.1/Person	
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#domicileRegisterNum
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#graduatedPlace
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#hdegree
+**http://www.w3.org/2006/vcard/ns#email	http://xmlns.com/foaf/0.1/Person	
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#major
+**http://www.w3.org/2006/vcard/ns#streetAddress	
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#residencePlace
+http://xmlns.com/foaf/0.1/Person	http://xmlns.com/foaf/0.1/birthday
+**http://www.frdc.com/legalDocument/ontologies/legalRole#countOfMember	
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#resume
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#domicilePlaceName
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#nativePlaceName
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#hkMcTwPassNum
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#education
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#maritalStatus
+**http://www.frdc.com/legalDocument/ontologies/legalRole#chatID	http://xmlns.com/foaf/0.1/Person	
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#languageSkill
+**http://www.w3.org/2006/vcard/ns#photo	http://xmlns.com/foaf/0.1/Person	
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#permanentResidency
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#nationality
+http://xmlns.com/foaf/0.1/Person	http://xmlns.com/foaf/0.1/age
+**http://www.w3.org/2006/vcard/ns#tel	http://xmlns.com/foaf/0.1/Person	
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#otherHumanId
+http://xmlns.com/foaf/0.1/Person	http://www.frdc.com/legalDocument/ontologies/legalRole#politicalStatus
